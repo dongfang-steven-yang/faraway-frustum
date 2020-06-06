@@ -1,0 +1,4 @@
+kitti:
+  training: '/media/steven/Data/datasets_cv_autonomous_driving/KITTI/training'
+  testing: '/media/steven/Data/datasets_cv_autonomous_driving/KITTI/testing'
+
