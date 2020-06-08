@@ -38,6 +38,9 @@ def frustum_project(points_2d_img, points_3d_cam0, boxes, masks=None):
                 else:  # use bounding box
                     if boxes[i, 0] <= points_2d_img[j, 0] <= boxes[i, 2] and boxes[i, 1] <= points_2d_img[j, 1] <= boxes[i, 3]:
                         points_2d_img[j, 2] = i
+                    # except:
+                    #     if boxes[0] <= points_2d_img[0] <= boxes[2] and boxes[1] <= points_2d_img[1] <= boxes[3]:
+                    #         points_2d_img[j, 2] = i
         # copy the labels to 3d points
         points_3d_cam0[:, 4] = points_2d_img[:, 2]
 
