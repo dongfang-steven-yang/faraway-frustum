@@ -4,7 +4,7 @@ A frustum-based method for detecting far-away objects in autonomous driving.
 
 ## Getting Started
 
-### Environment Configuration
+### Environment Config
 
 We recommend to use [Anaconda](https://docs.anaconda.com/anaconda/install/) to create a virtual environment for running this program.
 
@@ -39,6 +39,21 @@ Or you can manually install the dependencies listed in `requirements.txt`
 Download the following models, unzip and put them into `models/pre_trained/` folder:
 - Mask-RCNN model: [Google Drive](https://drive.google.com/file/d/10UrdoYgqBQhNGHLFFLUHTXnw0Qv-TYvE/view?usp=sharing)
 - Yolo-v3 model: [Google Drive](https://drive.google.com/file/d/1rAgNGKjeXoSjNfHXqiuvoie5KckbBSAN/view?usp=sharing)
+
+### Dataset Directory Structure
+For Kitti:
+```shell script
+.
+├── testing
+│   ├── calib
+│   ├── image_2
+│   └── velodyne
+└── training
+    ├── calib
+    ├── image_2
+    ├── label_2
+    └── velodyne
+```
 
 ### Running Scripts
 

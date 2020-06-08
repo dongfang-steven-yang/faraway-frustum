@@ -50,7 +50,7 @@ def visualize(data_loader, txt_a, txt_b, out_path):
             # transform 3d points into 2d points
             points_2d_img, points_3d_cam0 = transform(points_3d_lidar, cal_info)
             # get clusters that correspond to target txts (results)
-            clusters_cam0 = frustum_project(
+            clusters_cam0, points_2d_img, points_3d_cam0 = frustum_project(
                 points_2d_img=points_2d_img,
                 points_3d_cam0=points_3d_cam0,
                 boxes=boxes_img_b,
