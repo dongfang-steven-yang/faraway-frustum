@@ -22,13 +22,15 @@ class DatasetLoader:
         img = cv2.imread(path_sample_img)
 
         # ------ read calibration info ------
-
-        Ms_gt = []
-        with open(path_sample_gt) as f:
-            lines = f.readlines()
-            for line in lines:
-                l = line.strip('\n').split(' ')
-                Ms_gt.append(l)
+        try:
+            Ms_gt = []
+            with open(path_sample_gt) as f:
+                lines = f.readlines()
+                for line in lines:
+                    l = line.strip('\n').split(' ')
+                    Ms_gt.append(l)
+        except:
+            Ms_gt= None
 
         Ms_cal = []
         with open(path_sample_cal) as f:

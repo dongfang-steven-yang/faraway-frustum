@@ -138,9 +138,9 @@ def plot_bev(boxes_3d_a, labels_a, scores_a, boxes_3d_b, labels_b, scores_b, poi
 
 
 def visualize(data_loader, txt_a, txt_b, out_path):
-    # the sample list will always be selected based on the samples with `txt_a`.
+    # the sample list will always be selected based on the samples with `txt_b`.
     # if use ground truth label, please use txt_a as ground truth path.
-    files = os.listdir(txt_a)
+    files = os.listdir(txt_b)
     for file in files:
         if file[-4:] == '.txt':
             sample_name = file[:-4]
@@ -151,7 +151,7 @@ def visualize(data_loader, txt_a, txt_b, out_path):
             boxes_img_b, boxes_3d_b, labels_b, scores_b = get_objs_from_sample(txt_b, sample_name)
 
             # read raw data
-            img, points_3d_lidar, cal_info = data_loader.read_raw_data(sample_name)
+            img, points_3d_lidar, cal_info, gt_info = data_loader.read_raw_data(sample_name)
             # transform 3d points into 2d points
             points_2d_img, points_3d_cam0 = transform(points_3d_lidar, cal_info)
             # get clusters that correspond to target txts (results)
@@ -201,6 +201,7 @@ def main():
     data_loader = DatasetLoader(data_type=args.data_type, data_path=args.data_path)
 
     # run visualization
+    # if use ground truth label, please use txt_a as ground truth path.
     done = visualize(data_loader=data_loader, txt_a=args.txt_alpha, txt_b=args.txt_beta, out_path=args.out_path)
     if done:
         print("Visualization Done. ")

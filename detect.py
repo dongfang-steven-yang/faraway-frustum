@@ -34,7 +34,7 @@ class Detector:
             print('Generating result (.txt) for %s sample %s ...' % (self.data_loader.data_type, sample_name))
 
             # 1. read raw data
-            img, points_3d_lidar, cal_info = self.data_loader.read_raw_data(sample_num=sample_name)
+            img, points_3d_lidar, cal_info, gt_info = self.data_loader.read_raw_data(sample_num=sample_name)
 
             # 2. call yolo on `img` to get 2d boxes
             masks_img, boxes_img, labels_img, scores_img = self.model.detect(img)
