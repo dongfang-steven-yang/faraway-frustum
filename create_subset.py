@@ -133,21 +133,26 @@ def creating_subset(data_loader, data_list, max_point, min_dist, path_out_histog
         print('Start to create histogram txt files ... ')
         os.makedirs(path_out_histogram)
         for sample_name in data_list:
-            if int(sample_name)<7481:
-                img, points_3d_lidar, cal_info, gt_info = data_loader.read_raw_data(sample_num=sample_name)
-                get_distance_and_number_each(sample_name, points_3d_lidar, cal_info, gt_info, path=path_out_histogram)
+            try:
+                if int(sample_name)<7481:
+                    img, points_3d_lidar, cal_info, gt_info = data_loader.read_raw_data(sample_num=sample_name)
+                    get_distance_and_number_each(sample_name, points_3d_lidar, cal_info, gt_info, path=path_out_histogram)
+            except:
+                print('all samples were processed!')
         print('Histogram txt files were created!')
         print('Start to create subset label files ... ')
     else:
         print('Histogram txt files exist!')
         print('Start to create subset label files ... ')
-
     for sample_name in data_list:
-        if int(sample_name) < 7481:
-            print('==> running sample (Extract subset)' + sample_name)
-            extract_subset_each(path_gt=os.path.join(data_loader.data_path, 'training','label_2'), path_txt=path_out_histogram,
-                                path_gt_small=path_out_subset, name_sample=sample_name, min_distance=min_dist,
-                                max_points=max_point, focus='pd')
+        try:
+            if int(sample_name) < 7481:
+                print('==> running sample (Extract subset)' + sample_name)
+                extract_subset_each(path_gt=os.path.join(data_loader.data_path, 'training','label_2'), path_txt=path_out_histogram,
+                                    path_gt_small=path_out_subset, name_sample=sample_name, min_distance=min_dist,
+                                    max_points=max_point, focus='pd')
+        except:
+            print('all samples were processed!')
     return True
 
 def main():
@@ -165,8 +170,8 @@ def main():
     with open(os.path.join(args.data_split, 'training.txt'), 'r') as f:
         data_list = f.read().split('\n')
 
-    max_points = [5, 10, 15, 20]  # maximum number of lidar points in each object.
-    min_dists = [30.0, 40.0,50.0,60.0]  # minimum distance of objects in the subset.
+    max_points = [15]  # maximum number of lidar points in each object.
+    min_dists = [0.0, 10.0, 20.0]  # minimum distance of objects in the subset.
 
     for max_point in max_points:
         for min_dist in min_dists:
