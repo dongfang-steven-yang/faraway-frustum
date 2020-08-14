@@ -22,6 +22,14 @@ class DatasetLoader:
         img = cv2.imread(path_sample_img)
 
         # ------ read calibration info ------
+        Ms_cal = []
+        with open(path_sample_cal) as f:
+            lines = f.readlines()
+            for line in lines:
+                l = line.strip('\n').split(' ')
+                Ms_cal.append(l)
+
+        # ------ read ground truth ------
         try:
             Ms_gt = []
             with open(path_sample_gt) as f:
@@ -31,13 +39,6 @@ class DatasetLoader:
                     Ms_gt.append(l)
         except:
             Ms_gt= None
-
-        Ms_cal = []
-        with open(path_sample_cal) as f:
-            lines = f.readlines()
-            for line in lines:
-                l = line.strip('\n').split(' ')
-                Ms_cal.append(l)
 
         # P0-P3 for cameras, see the sensor setup page: http://www.cvlibs.net/datasets/kitti/setup.php
         P0 = np.array(Ms_cal[0][1:]).reshape(3, 4).astype(float)

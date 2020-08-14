@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 models/pre_trained/mask_rcnn/
 models/pre_trained/yolo_v3/
+data_frustum/
