@@ -1,4 +1,4 @@
-n_kitti_train = 7841
+n_kitti_train = 7481
 n_kitti_test = 7518
 
 with open('training.txt', 'w') as f:

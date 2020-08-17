@@ -286,6 +286,8 @@ def main():
 
         print('Working on sample %s ...' % sample_name)
 
+        # if sample_name != '007840':
+        #     continue
         # 1. read raw data
         img, points_3d_lidar, cal_info, gt_info = data_loader.read_raw_data(sample_num=sample_name)
 

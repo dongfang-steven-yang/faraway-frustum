@@ -15,6 +15,7 @@ class DatasetLoader:
         path_sample_cal = os.path.join(self.data_path, 'training', 'calib', '%s.txt' % sample_num)
         path_sample_gt=os.path.join(self.data_path, 'training', 'label_2', '%s.txt' % sample_num)
         # ------ read pointcloud ------
+        # points_3d_lidar = np.fromfile(open(path_sample_velodyne, 'r'), dtype=np.float32, count=-1).reshape([-1, 4])
         points_3d_lidar = np.fromfile(path_sample_velodyne, dtype=np.float32, count=-1).reshape([-1, 4])
         points_3d_lidar = points_3d_lidar[points_3d_lidar[:, 0] > 0]  # only use points in front of the vehicle
 
