@@ -1,6 +1,37 @@
 import cv2
 import numpy as np
 import os
+import tensorflow as tf
+from six import BytesIO
+from PIL import Image, ImageDraw, ImageFont
+from six.moves.urllib.request import urlopen
+
+
+def load_image_into_numpy_array(path):
+    """Load an image from file into a numpy array.
+
+    Puts image into numpy array to feed into tensorflow graph.
+    Note that by convention we put it into a numpy array with shape
+    (height, width, channels), where channels=3 for RGB.
+
+    Args:
+    path: the file path to the image
+
+    Returns:
+    uint8 numpy array with shape (img_height, img_width, 3)
+    """
+    image = None
+    if path.startswith('http'):
+        response = urlopen(path)
+        image_data = response.read()
+        image_data = BytesIO(image_data)
+        image = Image.open(image_data)
+    else:
+        image_data = tf.io.gfile.GFile(path, 'rb').read()
+        image = Image.open(BytesIO(image_data))
+
+    (im_width, im_height) = image.size
+    return np.array(image.getdata()).reshape((1, im_height, im_width, 3)).astype(np.uint8)
 
 
 class DatasetLoader:
@@ -20,7 +51,8 @@ class DatasetLoader:
         points_3d_lidar = points_3d_lidar[points_3d_lidar[:, 0] > 0]  # only use points in front of the vehicle
 
         # ------ read image ------
-        img = cv2.imread(path_sample_img)
+        # img = cv2.imread(path_sample_img)
+        img = load_image_into_numpy_array(path_sample_img)
 
         # ------ read calibration info ------
         Ms_cal = []

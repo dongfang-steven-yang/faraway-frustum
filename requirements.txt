@@ -1,6 +1,5 @@
 pandas
 matplotlib
 pandas
-pathlib
 scipy
-opencv-python
+numpy
