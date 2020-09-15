@@ -44,42 +44,37 @@ class DatasetLoader:
         path_sample_velodyne = os.path.join(self.data_path, 'training', 'velodyne', '%s.bin' % sample_num)
         path_sample_img = os.path.join(self.data_path, 'training', 'image_2', '%s.png' % sample_num)
         path_sample_cal = os.path.join(self.data_path, 'training', 'calib', '%s.txt' % sample_num)
-        path_sample_gt=os.path.join(self.data_path, 'training', 'label_2', '%s.txt' % sample_num)
+        path_sample_gt = os.path.join(self.data_path, 'training', 'label_2', '%s.txt' % sample_num)
         # ------ read pointcloud ------
         # points_3d_lidar = np.fromfile(open(path_sample_velodyne, 'r'), dtype=np.float32, count=-1).reshape([-1, 4])
         points_3d_lidar = np.fromfile(path_sample_velodyne, dtype=np.float32, count=-1).reshape([-1, 4])
         points_3d_lidar = points_3d_lidar[points_3d_lidar[:, 0] > 0]  # only use points in front of the vehicle
 
         # ------ read image ------
-        # img = cv2.imread(path_sample_img)
-        img = load_image_into_numpy_array(path_sample_img)
+        img = cv2.imread(path_sample_img)
+        # img = load_image_into_numpy_array(path_sample_img)
 
         # ------ read calibration info ------
-        Ms_cal = []
+        infos_cal = []
         with open(path_sample_cal) as f:
             lines = f.readlines()
             for line in lines:
-                l = line.strip('\n').split(' ')
-                Ms_cal.append(l)
+                infos_cal.append(line.strip('\n').split(' '))
 
         # ------ read ground truth ------
-        try:
-            Ms_gt = []
-            with open(path_sample_gt) as f:
-                lines = f.readlines()
-                for line in lines:
-                    l = line.strip('\n').split(' ')
-                    Ms_gt.append(l)
-        except:
-            Ms_gt= None
+        gt_labels = []
+        with open(path_sample_gt) as f:
+            lines = f.readlines()
+            for line in lines:
+                gt_labels.append(line.strip('\n').split(' '))
 
         # P0-P3 for cameras, see the sensor setup page: http://www.cvlibs.net/datasets/kitti/setup.php
-        P0 = np.array(Ms_cal[0][1:]).reshape(3, 4).astype(float)
-        P1 = np.array(Ms_cal[1][1:]).reshape(3, 4).astype(float)
-        P2 = np.array(Ms_cal[2][1:]).reshape(3, 4).astype(float)
-        P3 = np.array(Ms_cal[3][1:]).reshape(3, 4).astype(float)
-        R0_rect = np.array(Ms_cal[4][1:]).reshape(3, 3).astype(float)
-        Tr_velo_to_cam = np.array(Ms_cal[5][1:]).reshape(3, 4).astype(float)
+        P0 = np.array(infos_cal[0][1:]).reshape(3, 4).astype(float)
+        P1 = np.array(infos_cal[1][1:]).reshape(3, 4).astype(float)
+        P2 = np.array(infos_cal[2][1:]).reshape(3, 4).astype(float)
+        P3 = np.array(infos_cal[3][1:]).reshape(3, 4).astype(float)
+        R0_rect = np.array(infos_cal[4][1:]).reshape(3, 3).astype(float)
+        Tr_velo_to_cam = np.array(infos_cal[5][1:]).reshape(3, 4).astype(float)
 
         # change to homogeneous coordinates
         R0 = np.zeros((4, 4))
@@ -95,4 +90,4 @@ class DatasetLoader:
         # to-be-used calibration info
         cal_info = (P2, R0_rect, Tr_velo_to_cam)
 
-        return img, points_3d_lidar, cal_info, Ms_gt
+        return img, points_3d_lidar, cal_info, gt_labels

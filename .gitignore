@@ -2,6 +2,5 @@
 results/
 __pycache__/
 *.pyc
-models/pre_trained/mask_rcnn/
-models/pre_trained/yolo_v3/
-data_frustum/
+detectors/mask_rcnn/mask_rcnn_coco.h5
+detectors/saved_model_resnet50_1/

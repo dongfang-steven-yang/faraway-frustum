@@ -1,6 +1,8 @@
 # faraway-frustum
 A frustum-based method for detecting far-away objects in autonomous driving.
 
+Title option: A Frustum-based Sensor Fusion Approach for Faraway Pedestrian Detection
+
 
 ## Getting Started
 
