@@ -31,7 +31,7 @@ def main():
     # data list
     with open(os.path.join(args.data_split, 'kitti', 'training.txt'), 'r') as f:
         data_list_kitti_training = f.read().split('\n')
-    with open(os.path.join(args.data_split, 'open_pcdet', 'val.txt'), 'r') as f:
+    with open(os.path.join(args.data_split, 'split02', 'val.txt'), 'r') as f:
         data_list_val = f.read().split('\n')
 
     # # check if the split of FP is different from the split of PCdet

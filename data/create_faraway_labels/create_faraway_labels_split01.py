@@ -24,9 +24,9 @@ def main():
     # data list
     with open(os.path.join(args.data_split, 'kitti', 'training.txt'), 'r') as f:
         data_list_kitti_training = f.read().split('\n')
-    with open(os.path.join(args.data_split, 'ours_01_faraway', 'Haolin_raw', 'val.txt'), 'r') as f:
+    with open(os.path.join(args.data_split, 'split01', 'Haolin_raw', 'val.txt'), 'r') as f:
         data_list_val = f.read().split('\n')
-    out_put_folder = 'ours_01_faraway'
+    out_put_folder = 'split01'
 
     list_train, list_val = [], []
     list_train_ped_50, list_val_ped_50 = [], []

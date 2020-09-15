@@ -24,11 +24,9 @@ def main():
     # data list
     with open(os.path.join(args.data_split, 'kitti', 'training.txt'), 'r') as f:
         data_list_kitti_training = f.read().split('\n')
-    with open(os.path.join(args.data_split, 'open_pcdet', 'val.txt'), 'r') as f:
+    with open(os.path.join(args.data_split, 'split02', 'val.txt'), 'r') as f:
         data_list_val = f.read().split('\n')
-    out_put_folder = 'open_pcdet'
 
-    list_train, list_val = [], []
     list_train_ped_50, list_val_ped_50 = [], []
     list_train_ped_60, list_val_ped_60 = [], []
 
@@ -52,54 +50,38 @@ def main():
                 x, y, z = gt[11], gt[12], gt[13]
                 rotation_y = gt[14]
                 if float(z) >= 50:
-                    list_val.append(sample_name)
-                    list_val_ped_50.append(sample_name)
-                    if float(z) >= 60:
-                        list_val_ped_60.append(sample_name)
-                else:
                     if sample_name in data_list_val:
-                        list_val.append(sample_name)
+                        list_val_ped_50.append(sample_name)
                     else:
-                        list_train.append(sample_name)
+                        list_train_ped_50.append(sample_name)
+                if float(z) >= 60:
+                    if sample_name in data_list_val:
+                        list_val_ped_60.append(sample_name)
+                    else:
+                        list_train_ped_60.append(sample_name)
 
-    os.makedirs(os.path.join(args.data_split, out_put_folder), exist_ok=True)
-
-    with open(os.path.join(args.data_split, out_put_folder, 'val.txt'), 'w') as f:
-        for i, name in enumerate(list_val):
-            if i == 0:
-                f.write('%s' % name)
-            else:
-                f.write('\n%s' % name)
-
-    with open(os.path.join(args.data_split, out_put_folder, 'train.txt'), 'w') as f:
-        for i, name in enumerate(list_train):
-            if i == 0:
-                f.write('%s' % name)
-            else:
-                f.write('\n%s' % name)
-
-    with open(os.path.join(args.data_split, out_put_folder, 'val_50.txt'), 'w') as f:
+    with open(os.path.join(args.data_split, 'split02', 'val_50.txt'), 'w') as f:
         for i, name in enumerate(list_val_ped_50):
             if i == 0:
                 f.write('%s' % name)
             else:
                 f.write('\n%s' % name)
 
-    with open(os.path.join(args.data_split, out_put_folder, 'train_50.txt'), 'w') as f:
+    with open(os.path.join(args.data_split, 'split02', 'train_50.txt'), 'w') as f:
         for i, name in enumerate(list_train_ped_50):
             if i == 0:
                 f.write('%s' % name)
             else:
                 f.write('\n%s' % name)
 
-    with open(os.path.join(args.data_split, out_put_folder, 'val_60.txt'), 'w') as f:
+    with open(os.path.join(args.data_split, 'split02', 'val_60.txt'), 'w') as f:
         for i, name in enumerate(list_val_ped_60):
             if i == 0:
                 f.write('%s' % name)
             else:
                 f.write('\n%s' % name)
 
-    with open(os.path.join(args.data_split, out_put_folder, 'train_60.txt'), 'w') as f:
+    with open(os.path.join(args.data_split, 'split02', 'train_60.txt'), 'w') as f:
         for i, name in enumerate(list_train_ped_60):
             if i == 0:
                 f.write('%s' % name)
@@ -108,6 +90,7 @@ def main():
 
 
     print('Completed.')
+
 
 
 if __name__ == '__main__':

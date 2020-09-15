@@ -17,8 +17,6 @@ from utils.data_operations import transform, frustum_project
 
 np.set_printoptions(precision=4, suppress=True)
 
-
-
 # class mapping
 labels_coco_to_kitti = {
     'person': 'Pedestrian',

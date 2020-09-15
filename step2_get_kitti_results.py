@@ -115,9 +115,8 @@ def main():
     # parsing arguments
     argparser = argparse.ArgumentParser(description='Detecting Road-Users via Frustum-based Methods')
     argparser.add_argument('--data_split', default='data/split/kitti', help='path to data split info.')
-    # argparser.add_argument('--data_path', required=True, help='path to the data dir. See README for detail.')
-    argparser.add_argument('--path_kitti', default='/media/steven/Data/datasets_cv_autonomous_driving/KITTI/', help='path to the data dir. See README for detail.')
-    argparser.add_argument('--path_result', default='/home/steven/Projects/faraway-frustum-data', help='select 2D detector (mask_rcnn, yolo_v3)')
+    argparser.add_argument('--path_kitti', required=True, help='path to the data dir. See README for detail.')
+    argparser.add_argument('--path_result', required=True, help='select 2D detector (mask_rcnn, yolo_v3)')
     argparser.add_argument('--model', default='clustering', help='select 2D detector (clustering, NN)')
 
     args = argparser.parse_args()
