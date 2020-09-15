@@ -1,6 +1,3 @@
-"""
-2020-08-15: Created by Dongfang Yang.
-"""
 import os
 import argparse
 import numpy as np

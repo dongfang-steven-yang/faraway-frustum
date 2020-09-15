@@ -1,6 +1,3 @@
-"""
-2020-08-28: Created by Dongfang Yang.
-"""
 import os
 import argparse
 import numpy as np
@@ -24,7 +21,7 @@ def main():
     # data list
     with open(os.path.join(args.data_split, 'kitti', 'training.txt'), 'r') as f:
         data_list_kitti_training = f.read().split('\n')
-    with open(os.path.join(args.data_split, 'split01', 'Haolin_raw', 'val.txt'), 'r') as f:
+    with open(os.path.join(args.data_split, 'split01', 'raw', 'val.txt'), 'r') as f:
         data_list_val = f.read().split('\n')
     out_put_folder = 'split01'
 
