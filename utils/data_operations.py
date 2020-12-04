@@ -60,28 +60,38 @@ def frustum_project(points_2d_img, points_3d_cam0, boxes, masks=None):
     return clusters_cam0, points_2d_img, points_3d_cam0
 
 
-def save_kitti_txts(path_output, name_sample, classes, positions_3d, boxes, labels, scores):
+def save_kitti_txts(path_output, name_sample, classes, boxes_3d, boxes_2d, labels, scores):
     # kitti result
     os.makedirs(path_output, exist_ok=True)
     with open('%s/%s.txt' % (path_output, name_sample), 'w') as f:
         f.truncate()
         for i in range(len(labels)):
-            if positions_3d[i] is None:  # only has 2D detection result but not 3D result
+            if boxes_3d[i] is None:  # only has 2D detection result but not 3D result
                 pass
             else:
                 class_name = classes[labels[i]]
                 # Kitti type:
                 # 'Car', 'Van', 'Truck' 'Pedestrian', 'Person_sitting', 'Cyclist', 'Tram', 'Misc' or 'DontCare'
                 if class_name in labels_coco_to_kitti.keys():
+
+                    # decode 3d bounding boxes
                     # pre-defined size for objects
-                    if class_name == 'person':
-                        l, w, h = 0.7, 0.7, 1.75
-                    elif class_name == 'bicycle':
-                        l, w, h = 1.0, 1.0, 1.5
-                    elif class_name in ['car', 'truck', 'bus']:
-                        l, w, h = 3.0, 3.0, 1.5
+                    if boxes_3d[i][3] == np.nan:
+                        if class_name == 'person':
+                            l, w, h = 0.7, 0.7, 1.75
+                        elif class_name == 'bicycle':
+                            l, w, h = 1.0, 1.0, 1.5
+                        elif class_name in ['car', 'truck', 'bus']:
+                            l, w, h = 3.0, 3.0, 1.5
+                        else:
+                            raise Exception('unidentified category.')
+                        x, y, z = boxes_3d[i][0], boxes_3d[i][1] + h / 2, boxes_3d[i][2]
+                        rotation_y = 0
                     else:
-                        raise Exception('unidentified category.')
+                        x, y, z = boxes_3d[i][0], boxes_3d[i][1], boxes_3d[i][2]
+                        h, w, l = boxes_3d[i][3], boxes_3d[i][4], boxes_3d[i][5]
+                        rotation_y = boxes_3d[i][6]
+
 
                     #    1    type         Describes the type of object: 'Car', 'Van', 'Truck',
                     #                      'Pedestrian', 'Person_sitting', 'Cyclist', 'Tram',
@@ -99,32 +109,33 @@ def save_kitti_txts(path_output, name_sample, classes, positions_3d, boxes, labe
                     f.write('%.2f ' % 0)
                     #    4    bbox         2D bounding box of object in the image (0-based index):
                     #                      contains left, top, right, bottom pixel coordinates
-                    f.write('%.2f ' % boxes[i][0])
-                    f.write('%.2f ' % boxes[i][1])
-                    f.write('%.2f ' % boxes[i][2])
-                    f.write('%.2f ' % boxes[i][3])
+                    f.write('%.2f ' % boxes_2d[i][0])
+                    f.write('%.2f ' % boxes_2d[i][1])
+                    f.write('%.2f ' % boxes_2d[i][2])
+                    f.write('%.2f ' % boxes_2d[i][3])
                     #    3    dimensions   3D object dimensions: height, width, length (in meters)
                     f.write('%.2f ' % h)
                     f.write('%.2f ' % w)
                     f.write('%.2f ' % l)
                     #    3    location     3D object location x,y,z in camera coordinates (in meters)
-                    f.write('%.2f ' % positions_3d[i][0])
-                    f.write('%.2f ' % (positions_3d[i][1] + h/2))
-                    f.write('%.2f ' % positions_3d[i][2])
+                    f.write('%.2f ' % x)
+                    f.write('%.2f ' % y)
+                    f.write('%.2f ' % z)
                     #    1    rotation_y   Rotation ry around Y-axis in camera coordinates [-pi..pi]
-                    f.write('%.2f ' % 0)
-                    f.write('%.4f' % scores[i] + '\n')
+                    f.write('%.2f ' % rotation_y)
+
                     #    1    score        Only for results: Float, indicating confidence in
+                    f.write('%.4f' % scores[i] + '\n')
                     #                      detection, needed for p/r curves, higher is better.
                 else:  # DontCare
                     f.write('DontCare ')
                     f.write('-1 ')
                     f.write('-1 ')
                     f.write('-10 ')
-                    f.write('%.2f ' % boxes[i][0])
-                    f.write('%.2f ' % boxes[i][1])
-                    f.write('%.2f ' % boxes[i][2])
-                    f.write('%.2f ' % boxes[i][3])
+                    f.write('%.2f ' % boxes_2d[i][0])
+                    f.write('%.2f ' % boxes_2d[i][1])
+                    f.write('%.2f ' % boxes_2d[i][2])
+                    f.write('%.2f ' % boxes_2d[i][3])
                     f.write('-1 ')
                     f.write('-1 ')
                     f.write('-1 ')

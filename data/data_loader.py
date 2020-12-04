@@ -39,12 +39,16 @@ class DatasetLoader:
         self.data_type = data_type
         self.data_path = data_path
 
-    def read_raw_data(self, sample_num: str):
+    def read_raw_data(self, sample_num, split_set):
+        print('-- %s sample %s loaded.' % (split_set, sample_num))
         # data paths
-        path_sample_velodyne = os.path.join(self.data_path, 'training', 'velodyne', '%s.bin' % sample_num)
-        path_sample_img = os.path.join(self.data_path, 'training', 'image_2', '%s.png' % sample_num)
-        path_sample_cal = os.path.join(self.data_path, 'training', 'calib', '%s.txt' % sample_num)
-        path_sample_gt = os.path.join(self.data_path, 'training', 'label_2', '%s.txt' % sample_num)
+        path_sample_velodyne = os.path.join(self.data_path, split_set, 'velodyne', '%s.bin' % sample_num)
+        path_sample_img = os.path.join(self.data_path, split_set, 'image_2', '%s.png' % sample_num)
+        path_sample_cal = os.path.join(self.data_path, split_set, 'calib', '%s.txt' % sample_num)
+        if split_set == 'training':
+            path_sample_gt = os.path.join(self.data_path, split_set, 'label_2', '%s.txt' % sample_num)
+        else:
+            pass
         # ------ read pointcloud ------
         # points_3d_lidar = np.fromfile(open(path_sample_velodyne, 'r'), dtype=np.float32, count=-1).reshape([-1, 4])
         points_3d_lidar = np.fromfile(path_sample_velodyne, dtype=np.float32, count=-1).reshape([-1, 4])
@@ -62,11 +66,14 @@ class DatasetLoader:
                 infos_cal.append(line.strip('\n').split(' '))
 
         # ------ read ground truth ------
-        gt_labels = []
-        with open(path_sample_gt) as f:
-            lines = f.readlines()
-            for line in lines:
-                gt_labels.append(line.strip('\n').split(' '))
+        if split_set == 'training':
+            gt_labels = []
+            with open(path_sample_gt) as f:
+                lines = f.readlines()
+                for line in lines:
+                    gt_labels.append(line.strip('\n').split(' '))
+        else:
+            gt_labels = None
 
         # P0-P3 for cameras, see the sensor setup page: http://www.cvlibs.net/datasets/kitti/setup.php
         P0 = np.array(infos_cal[0][1:]).reshape(3, 4).astype(float)

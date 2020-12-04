@@ -48,10 +48,12 @@ import urllib.request
 import shutil
 
 # Root directory of the project
-ROOT_DIR = os.path.abspath("../../")
+# ROOT_DIR = os.path.abspath("../../")
+ROOT_DIR = os.path.abspath('detectors/mask_rcnn')
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
+
 from mrcnn.config import Config
 from mrcnn import model as modellib, utils
 

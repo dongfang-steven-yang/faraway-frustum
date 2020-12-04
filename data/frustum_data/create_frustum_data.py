@@ -13,10 +13,10 @@ def main():
     # parsing arguments
     argparser = argparse.ArgumentParser(description='Detecting Road-Users via Frustum-based Methods')
     argparser.add_argument('--data_type', default='kitti', help='select data type (e.g. kitti).')
-    argparser.add_argument('--data_split', default='data/split', help='path to data split info.')
+    argparser.add_argument('--data_split', default='/home/steven/Projects/faraway-frustum/data/split', help='path to data split info.')
     # argparser.add_argument('--path_kitti', required=True, help='path to the data dir. See README for detail.')
     # argparser.add_argument('--path_output', required=True, help='select 2D detector (mask_rcnn, yolo_v3)')
-    argparser.add_argument('--path_kitti', default='/media/steven/Data/datasets_cv_autonomous_driving/KITTI/', help='path to the data dir. See README for detail.')
+    argparser.add_argument('--path_kitti', default='/media/steven/Backup Plus/Datasets/datasets_cv_autonomous_driving/KITTI', help='path to the data dir. See README for detail.')
     argparser.add_argument('--path_output', default='/home/steven/Projects/faraway-frustum-data/', help='select 2D detector (mask_rcnn, yolo_v3)')
     args = argparser.parse_args()
 
@@ -28,7 +28,7 @@ def main():
     # data list
     with open(os.path.join(args.data_split, 'kitti', 'training.txt'), 'r') as f:
         data_list_kitti_training = f.read().split('\n')
-    with open(os.path.join(args.data_split, 'split02', 'val.txt'), 'r') as f:
+    with open(os.path.join(args.data_split, 'split01', 'raw', 'val.txt'), 'r') as f:
         data_list_val = f.read().split('\n')
 
     # # check if the split of FP is different from the split of PCdet
@@ -41,20 +41,34 @@ def main():
 
     # run detection
     # thr_faraway = 60
-    # data_type = 'data_pcdet_val_%d' % thr_faraway
-    data_type = 'data_pcdet_train'
+    # data_type = 'data_split01_val'
 
-    path_frustum_data = os.path.join(args.path_output, '%s/x' % data_type)
-    path_frustum_labels = os.path.join(args.path_output, '%s/y' % data_type)
-    path_frustum = os.path.join(args.path_output, data_type)
+    category = 'Car'
+    # category = 'Pedestrian'
+
+    # partition = 'train'
+    partition = 'val'
+
+    folder_name = 'data_split01_%s_%s' % (partition, category)
+
+
+    path_frustum_data = os.path.join(args.path_output, '%s/x' % folder_name)
+    path_frustum_labels = os.path.join(args.path_output, '%s/y' % folder_name)
+    path_frustum = os.path.join(args.path_output, folder_name)
     os.makedirs(path_frustum_data, exist_ok=True)
     os.makedirs(path_frustum_labels, exist_ok=True)
 
     i_data = 0
     pointclouds, labels_3d = [], []
     for sample_name in data_list_kitti_training:
-        if sample_name in data_list_val:
-            continue
+        if partition == 'train':
+            if sample_name in data_list_val:  # skip val split
+                continue
+        elif partition == 'val':
+            if sample_name not in data_list_val:  # skip train split
+                continue
+        else:
+            raise Exception('Invalid Partition Selection.')
 
         print('Working on sample %s ...' % sample_name)
 
@@ -68,7 +82,7 @@ def main():
         boxes_2d_img = []
         boxes_3d_cam0 = []
         for gt in gt_info:
-            if gt[0] == 'Pedestrian':
+            if gt[0] == category:
                 # 2d boxes
                 x_min = gt[4]
                 y_min = gt[5]
@@ -104,6 +118,8 @@ def main():
             pickle.dump(pointcloud, open(os.path.join(path_frustum_data, '%06d.p' % i_data), 'wb'))
             pickle.dump(boxes_3d_cam0[i], open(os.path.join(path_frustum_labels, '%06d.p' % i_data), 'wb'))
             i_data += 1
+
+    print('Total num. of samples: %d' % len(pointclouds))
 
     assert len(pointclouds) == len(labels_3d)
     pickle.dump(pointclouds, open(os.path.join(path_frustum, 'samples.p'), 'wb'))

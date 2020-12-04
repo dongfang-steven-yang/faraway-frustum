@@ -30,14 +30,19 @@ def test():
     # - dim 0: num. of frustums
     # - dim 1: num. of points
     # - dim 2: x, y, z, intensity, useless
-    data = pickle.load(open('data_frustum/samples.p', 'rb'))
+    # data = pickle.load(open('data_frustum/samples.p', 'rb'))
+    data = pickle.load(open('/home/steven/Projects/faraway-frustum-data/data_split01_val/samples.p', 'rb'))
+
 
     # load labels
     # format:
     # - dim 0: num. of frustums
     # - dim 1: x, y, z, height, width, length, rotation_y
 
-    labels = pickle.load(open('data_frustum/labels.p', 'rb'))
+    # labels = pickle.load(open('data_frustum/labels.p', 'rb'))
+    labels = pickle.load(open('/home/steven/Projects/faraway-frustum-data/data_split01_val/labels.p', 'rb'))
+
+
     assert len(data) == len(labels)
 
     # test plot in BEV

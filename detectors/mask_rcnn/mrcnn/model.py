@@ -25,10 +25,10 @@ import keras.models as KM
 
 # CuDNN error
 # https://stackoverflow.com/questions/43147983/could-not-create-cudnn-handle-cudnn-status-internal-error
-# os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
-# config = tf.ConfigProto()
-# config.gpu_options.per_process_gpu_memory_fraction = 0.8
-# config.gpu_options.allow_growth = True
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.8
+config.gpu_options.allow_growth = True
 
 from mrcnn import utils
 
