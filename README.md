@@ -53,6 +53,69 @@ generating final results in the same directory. Again, you need to specify the p
 and the path to store the 2D detection results `--path_result`. They should be the same as in the previous 
 step. You also need to specify the path to trained NN models. See additional instruction in the `step2_get_kitti_results.py`.
 
+## Evaluation
+
+You can use our tools in `evaluation` to calculate average IoU scores or mAP scores of trained models.
+
+*If you want to calculate mAP for faraway objects:*
+
+1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files: 
+   Give the PATH to detection result files (e.g 000000.txt ...) and the PATH to corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`
+   Give `fuction='eval_sub'` in `line 404` and then run the code to extract the sequential detection result files (and sequential label files) for faraway objects
+
+2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:
+   change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57)
+   Use `line 44-46` and comment `line 48-50`
+   Use `line 61` and change the IoU threshold, and comment `line 60`
+   Change `line 783-784` to your own root PATH
+
+3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`: 
+   Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp` or use `CMake` and the provided `'CMakeLists.txt'`
+
+4. Give data for evaluation:
+   Copy your sequential label files to `.../cpp/label_2/`
+   Copy your sequential detection result files to `.../cpp/results/dt/data/`
+
+5. Run the compiled file:
+   Open the Terminal Window in `/cpp` and run as following: `./test dt`
+
+6. Calculate the mAP for faraway objects:
+   Run `.../cpp/calculate_mAP_faraway.py` to print final mAP for 3D/BEV faraway object detection
+
+*If you want to calculate offical mAP (easy, mod, hard):*
+
+1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:
+   Give the PATH to our raw detection result files (e.g 000000.txt ...) and the PATH to state-of-the-art detector's results (e.g 000000.txt ...) in `line 417-418`
+   Give `fuction='fuse_result'` in `line 404`  and then run the code to generate our detection result files by fusing our faraway object results with state-of-the-art detector's results
+   Give the PATH to our detection result files (or corresponding KITTI label files) in `line 435-436`
+   Give `fuction='eval_val'` in `line 404` and then run the code to change the detection result files (or label files) to sequential result files (or sequential label files)
+
+2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:
+   change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57)
+   Use `line 48-50` and comment `line 44-46`
+   Use `line 60` and and comment `line 61`
+   Change `line 783-784` to your own root PATH
+
+3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`: 
+   Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp` or use `CMake` and the provided `'CMakeLists.txt'`
+
+4. Give data for evaluation:
+   Copy your sequential label files to `.../cpp/label_2/`
+   Copy your sequential detection result files to `.../cpp/results/dt/data/`
+
+5. Run the compiled file:
+   Open the Terminal Window in `/cpp` and run as following: `./test dt`
+
+6. Calculate the mAP for faraway objects:
+   Run `.../cpp/calculate_mAP.py` to print final mAP (easy, mod, hard) for 3D/BEV object detection
+
+*If you want to calculate Average IoU for BEV detection results:*
+
+1. Open `average_iou.py` and do:
+   Give the correct PATH to your detection result files and the PATH to the corresponding label files in `line 157-160`
+   Define the class (`1` for pedestrian and `0` for car) in `line 171`
+
+2. Run `average_iou.py` and get results
 
 ## Contact
 
