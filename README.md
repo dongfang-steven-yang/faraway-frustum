@@ -1,6 +1,10 @@
 # faraway-frustum
 Faraway-Frustum: Dealing with LiDAR Sparsity for 3D Object Detection using Fusion
 
+<p align="center">
+<img src="pipeline.png" alt="Faraway-Frustum" align="middle" width="800"/>
+</p>
+
 Paper in ArXiv: https://arxiv.org/abs/2011.01404
 
 Submitted to ICAR 2021.
