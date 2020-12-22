@@ -1,0 +1,3 @@
+/home/citrhaolin/KT_data/bird/devkit_object/CMakeFiles/edit_cache.dir
+/home/citrhaolin/KT_data/bird/devkit_object/CMakeFiles/rebuild_cache.dir
+/home/citrhaolin/KT_data/bird/devkit_object/CMakeFiles/evaluate_object.dir
