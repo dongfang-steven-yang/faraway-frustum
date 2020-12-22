@@ -60,18 +60,18 @@ step. You also need to specify the path to trained NN models. See additional ins
 
 We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. We also provide the TXT files of both ground truth labels and detection results of our method (on validation set). You can use them in `result` folder for evaluation test:   
 
-1. Results in `label\val` are from the ground truth labels on the validation subset of KITTI dataset
+1. Files in `result\label\val` are from the ground truth labels on the validation subset of KITTI dataset
 
-2. Results in `label\ours_pedestrian` are pedestrian detection results on the validation subset of our method (`box\val` and `mask\val` represent our model using box-frustum and mask-frustum respectively, which is same for car results below).
+2. Files in `result\ours_pedestrian` are pedestrian detection results on the validation subset of our method (`box\val` and `mask\val` represent our model using box-frustum and mask-frustum respectively, which is same for car results below).
 
-3. Results in `label\ours_car`are car detection results on the validation subset of our method.
+3. Files in `result\ours_car`are car detection results on the validation subset of our method.
 
 There are 3 types of evaluation results, which can be obtained as explained below:
 
 ### Average IoU for BEV detection of faraway objects:
 
 1. Open `average_iou.py` and do:
-   Give the correct PATH to your detection result files and the PATH to the corresponding label files in `line 157-160`
+   Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`
    Define the class (`1` for pedestrian and `0` for car) in `line 171`
 
 2. Run `average_iou.py` and get results
@@ -79,7 +79,7 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 ### mAP for faraway objects:
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files: 
-   Give the PATH to detection result files (e.g 000000.txt ...) and the PATH to corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`
+   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to detection result files (e.g 000000.txt ...) and the PATH (e.g `.\result\label\val`) to corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`
    Give `fuction='eval_sub'` in `line 404` and then run the code to extract the sequential detection result files (and sequential label files) for faraway objects
 
 2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:
@@ -106,7 +106,7 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:
    Give the PATH to our raw detection result files (e.g 000000.txt ...) and the PATH to state-of-the-art detector's results (e.g 000000.txt ...) in `line 417-418`
    Give `fuction='fuse_result'` in `line 404`  and then run the code to generate our detection result files by fusing our faraway object results with state-of-the-art detector's results
-   Give the PATH to our detection result files (or corresponding KITTI label files) in `line 435-436`
+   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to our detection result files (or PATH (e.g `.\result\label\val`) to corresponding KITTI label files) in `line 435-436`
    Give `fuction='eval_val'` in `line 404` and then run the code to change the detection result files (or label files) to sequential result files (or sequential label files)
 
 2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:
