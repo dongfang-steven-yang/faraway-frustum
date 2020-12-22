@@ -59,7 +59,8 @@ step. You also need to specify the path to trained NN models. See additional ins
 
 ## Calculating Detection Results
 
-We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. 
+We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. We also provide the TXT files of both ground truth labels and detection results of our method (on validation set). You can use them in `result` folder for evaluation test.   
+
 There are 3 types of results, which can be obtained as explained below:
 
 ### Average IoU for BEV detection of faraway objects:
