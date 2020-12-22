@@ -12,7 +12,7 @@ Paper in ArXiv: https://arxiv.org/abs/2011.01404
 Submitted to ICAR 2021.
 
 ## Environment
-There two scripts for running this program. Each script requires a different version of `tensorflow`. Check the python script files for version detail. 
+There are two scripts for running this program. Each script requires a different version of `tensorflow`. Check the python script files for version detail. 
 
 We recommend to use `anaconda` to manage the tensorflow environment. You can use the following commands to configure your environment:
 ```shell
