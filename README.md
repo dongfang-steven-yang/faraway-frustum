@@ -74,32 +74,32 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 ### Average IoU for BEV detection of faraway objects:
 
 1. Open `average_iou.py` and do:  
-      Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`.  
-      Define the class (`1` for pedestrian and `0` for car) in `line 171`.  
+      1.1. Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`.  
+      1.2. Define the class (`1` for pedestrian and `0` for car) in `line 171`.  
 
 2. Run `average_iou.py` and get results.  
 
 ### mAP for faraway objects:
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:   
-   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to detection result files (e.g 000000.txt ...) and the PATH (e.g `.\result\label\val`) to     corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`.    
-   Give `fuction='eval_sub'` in `line 404` and then run the code to extract the sequential detection result files (and sequential label files) for faraway objects.    
+   1.1. Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to detection result files (e.g 000000.txt ...) and the PATH (e.g `.\result\label\val`) to     corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`.    
+   1.2. Give `fuction='eval_sub'` in `line 404` and then run the code to extract the sequential detection result files (and sequential label files) for faraway objects.    
 
 2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:  
-   change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57).    
-   Use `line 44-46` and comment out `line 48-50`.    
-   Use `line 61` and change the IoU threshold, and comment out `line 60`.    
-   Change `line 783-784` to your own root PATH.    
+   2.1. change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57).    
+   2.2. Use `line 44-46` and comment out `line 48-50`.    
+   2.3. Use `line 61` and change the IoU threshold, and comment out `line 60`.    
+   2.4. Change `line 783-784` to your own root PATH.    
 
 3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`:     
-   Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp`   
-   or use `CMake` and the provided `'CMakeLists.txt'`.    
+   3.1 Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp`   
+   3.2 or use `CMake` and the provided `'CMakeLists.txt'`.    
 
 4. Give files for evaluation:    
-   Copy your sequential label files to `.../cpp/label_2/`.    
-   Copy your sequential detection result files to `.../cpp/results/dt/data/`.    
+   4.1. Copy your sequential label files to `.../cpp/label_2/`.    
+   4.2. Copy your sequential detection result files to `.../cpp/results/dt/data/`.    
 
-5. Run the compiled C++ file:    
+5. Run the compiled C++ file:   
    Open the Terminal Window in `/cpp` and run as follow: `./test dt`.    
 
 6. Calculate the mAP for faraway objects:    
@@ -108,23 +108,23 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 ### Kitti offical mAP (easy, mod, hard):
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:    
-   Give the PATH to our raw detection result files (e.g 000000.txt ...) and the PATH to state-of-the-art detector's results (e.g 000000.txt ...) in `line 417-418`.  
-   Give `fuction='fuse_result'` in `line 404`  and then run the code to generate our detection result files by fusing our faraway object results with state-of-the-art detector's results.  
-   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to our detection result files (or PATH (e.g `.\result\label\val`) to corresponding KITTI label files) in `line 435-436`.  
-   Give `fuction='eval_val'` in `line 404` and then run the code to change the detection result files (or label files) to sequential result files (or sequential label files).  
+   1.1. Give the PATH to our raw detection result files (e.g 000000.txt ...) and the PATH to state-of-the-art detector's results (e.g 000000.txt ...) in `line 417-418`.  
+   1.2. Give `fuction='fuse_result'` in `line 404`  and then run the code to generate our detection result files by fusing our faraway object results with state-of-the-art detector's results.  
+   1.3. Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to our detection result files (or PATH (e.g `.\result\label\val`) to corresponding KITTI label files) in `line 435-436`.  
+   1.4. Give `fuction='eval_val'` in `line 404` and then run the code to change the detection result files (or label files) to sequential result files (or sequential label files).  
 
 2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:
-   change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57).  
-   Use `line 48-50` and comment out `line 44-46`.  
-   Use `line 60` and and comment out `line 61`.  
-   Change `line 783-784` to your own root PATH.  
+   2.1. change the number (e.g.3756) in `line 35` to the max number of the sequential result files (e.g. if you have following result(label) files: 000000.txt,...,000057.txt, you will change the number to 57).  
+   2.2. Use `line 48-50` and comment out `line 44-46`.  
+   2.3. Use `line 60` and and comment out `line 61`.  
+   2.4. Change `line 783-784` to your own root PATH.  
 
 3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`:   
    Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp` or use `CMake` and the provided `'CMakeLists.txt'`.  
 
 4. Give files for evaluation:  
-   Copy your sequential label files to `.../cpp/label_2/`.  
-   Copy your sequential detection result files to `.../cpp/results/dt/data/`.  
+   4.1. Copy your sequential label files to `.../cpp/label_2/`.  
+   4.2. Copy your sequential detection result files to `.../cpp/results/dt/data/`.  
 
 5. Run the compiled C++ file:  
    Open the Terminal Window in `/cpp` and run as following: `./test dt`.  
