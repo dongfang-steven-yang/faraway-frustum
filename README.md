@@ -9,7 +9,7 @@ This work improves the detection of faraway objects using a frustum-based lidar/
 
 Paper in ArXiv: https://arxiv.org/abs/2011.01404
 
-Submitted to ICRA 2021.
+Submitted to ICRA 2021. Official KITTI results: http://www.cvlibs.net/datasets/kitti/eval_object_detail.php?&result=48cc1c0c27874e2cc19cbcc76654e9a01c5403a0
 
 ## Environment
 There are two scripts for running this program. Each script requires a different version of `tensorflow`. Check the python script files for version detail. 
