@@ -58,7 +58,7 @@ step. You also need to specify the path to trained NN models. See additional ins
 
 ## Calculating Detection Results
 
-We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. To be noticed, the code are based on either C++ or Python.   
+We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. To be noticed, the code is based on either C++ or Python.   
 
 We also provide the TXT files of both ground truth labels and detection results of our method (on validation set). You can use them in `result` folder for evaluation test:     
 
