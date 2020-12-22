@@ -72,7 +72,7 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 
 ### Average IoU for BEV detection of faraway objects:
 
-1. Open `average_iou.py` and do:
+1. Open `average_iou.py` and do:  
       Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`.  
       Define the class (`1` for pedestrian and `0` for car) in `line 171`.  
 
