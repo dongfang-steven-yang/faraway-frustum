@@ -42,7 +42,6 @@ and put it into folder `detectors/mask_rcnn/`.
         └── velodyne
     ```
 
-
 3. Run stage one of 2D detection nd save results: execute the script `step1_save_2d_results.py` to obtain 
 the 2D detection result (including boxes, masks, labels, scores). It will be saved as pickle file.
 You need to specify the path to Kitti dataset `--path_kitti` and the path to store the 2D detection results 
@@ -59,9 +58,15 @@ step. You also need to specify the path to trained NN models. See additional ins
 
 ## Calculating Detection Results
 
-We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. We also provide the TXT files of both ground truth labels and detection results of our method (on validation set). You can use them in `result` folder for evaluation test.   
+We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. We also provide the TXT files of both ground truth labels and detection results of our method (on validation set). You can use them in `result` folder for evaluation test:   
 
-There are 3 types of results, which can be obtained as explained below:
+1. Results in `label\val` are from the ground truth labels on the validation subset of KITTI dataset
+
+2. Results in `label\ours_pedestrian` are pedestrian detection results on the validation subset of our method (`box\val` and `mask\val` represent our model using box-frustum and mask-frustum respectively, which is same for car results below).
+
+3. Results in `label\ours_car`are car detection results on the validation subset of our method.
+
+There are 3 types of evaluation results, which can be obtained as explained below:
 
 ### Average IoU for BEV detection of faraway objects:
 
