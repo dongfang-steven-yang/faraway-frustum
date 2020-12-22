@@ -1,6 +1,8 @@
 # faraway-frustum
 Faraway-Frustum: Dealing with LiDAR Sparsity for 3D Object Detection using Fusion
 
+This work improves the detection of faraway objects using a frustum-based lidar/camera fusing strategy. 
+
 <p align="center">
 <img src="pipeline.png" alt="Faraway-Frustum" align="middle" width="800"/>
 </p>
