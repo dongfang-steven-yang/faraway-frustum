@@ -57,11 +57,20 @@ generating final results in the same directory. Again, you need to specify the p
 and the path to store the 2D detection results `--path_result`. They should be the same as in the previous 
 step. You also need to specify the path to trained NN models. See additional instruction in the `step2_get_kitti_results.py`.
 
-## Evaluation
+## Calculating Detection Results
 
-You can use our tools in `evaluation` to calculate average IoU scores or mAP scores of trained models.
+We provide the code to calculate the detection results in the paper. All the code for result calculation can be found in the `evaluation` folder. 
+There are 3 types of results, which can be obtained as explained below:
 
-*If you want to calculate mAP for faraway objects:*
+### Average IoU for BEV detection of faraway objects:
+
+1. Open `average_iou.py` and do:
+   Give the correct PATH to your detection result files and the PATH to the corresponding label files in `line 157-160`
+   Define the class (`1` for pedestrian and `0` for car) in `line 171`
+
+2. Run `average_iou.py` and get results
+
+### mAP for faraway objects:
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files: 
    Give the PATH to detection result files (e.g 000000.txt ...) and the PATH to corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`
@@ -86,7 +95,7 @@ You can use our tools in `evaluation` to calculate average IoU scores or mAP sco
 6. Calculate the mAP for faraway objects:
    Run `.../cpp/calculate_mAP_faraway.py` to print final mAP for 3D/BEV faraway object detection
 
-*If you want to calculate offical mAP (easy, mod, hard):*
+### Kitti offical mAP (easy, mod, hard):
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:
    Give the PATH to our raw detection result files (e.g 000000.txt ...) and the PATH to state-of-the-art detector's results (e.g 000000.txt ...) in `line 417-418`
@@ -112,14 +121,6 @@ You can use our tools in `evaluation` to calculate average IoU scores or mAP sco
 
 6. Calculate the mAP for faraway objects:
    Run `.../cpp/calculate_mAP.py` to print final mAP (easy, mod, hard) for 3D/BEV object detection
-
-*If you want to calculate Average IoU for BEV detection results:*
-
-1. Open `average_iou.py` and do:
-   Give the correct PATH to your detection result files and the PATH to the corresponding label files in `line 157-160`
-   Define the class (`1` for pedestrian and `0` for car) in `line 171`
-
-2. Run `average_iou.py` and get results
 
 ## Contact
 
