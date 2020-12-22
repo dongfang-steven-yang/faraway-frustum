@@ -131,6 +131,10 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 6. Calculate the mAP for faraway objects:  
    Run `.../cpp/calculate_mAP.py` to print final mAP (easy, mod, hard) for 3D/BEV object detection.  
 
+## Acknowledgement
+
+The mask-RCNN part in our work was based on the implementation: https://github.com/matterport/Mask_RCNN. 
+
 ## Contact
 
 - Dongfang Yang: yang.3455@osu.edu
