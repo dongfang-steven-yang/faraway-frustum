@@ -42,17 +42,17 @@ and put it into folder `detectors/mask_rcnn/`.
         └── velodyne
     ```
 
-3. Run stage one of 2D detection nd save results: execute the script `step1_save_2d_results.py` to obtain 
+3. Run stage one of 2D detection and save results: execute the script `step1_save_2d_results.py` to obtain 
 the 2D detection result (including boxes, masks, labels, scores). It will be saved as pickle file.
 You need to specify the path to Kitti dataset `--path_kitti` and the path to store the 2D detection results 
 `--path_result`.
 
-4. Download the trained NN models for pedestrian/car position detection/refinement in the frustum pointcloud.
+4. Download the trained NN models for faraway pedestrian/car position detection/refinement in the frustum pointcloud.
 Here is the link to download the models: [NN models - Google Drive](https://drive.google.com/file/d/1_BdfX87hUUXLlytWfNxYeOD-qpmGvZmc/view?usp=sharing)
 
 5. Run stage two of frustum-projection and 3D box estimation: execute the script `step2_get_kitti_results.py` 
-to obtain the final results of Kitti txt format. It will read the pickle files obtained in previous step and 
-generating final results in the same directory. Again, you need to specify the path to Kitti dataset `--path_kitti` 
+to obtain the final results in Kitti txt format. It will read the pickle files obtained in previous step and 
+generate final results in the same directory. Again, you need to specify the path to Kitti dataset `--path_kitti` 
 and the path to store the 2D detection results `--path_result`. They should be the same as in the previous 
 step. You also need to specify the path to trained NN models. See additional instruction in the `step2_get_kitti_results.py`.
 
