@@ -73,15 +73,15 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 ### Average IoU for BEV detection of faraway objects:
 
 1. Open `average_iou.py` and do:
-   Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`.  
-   Define the class (`1` for pedestrian and `0` for car) in `line 171`.  
+      Give the correct PATH (e.g `.\result\ours_pedestrian\mask\val`) to your detection result files and the PATH (e.g `.\result\label\val`) to the corresponding label files  in `line 157-160`.  
+      Define the class (`1` for pedestrian and `0` for car) in `line 171`.  
 
 2. Run `average_iou.py` and get results.  
 
 ### mAP for faraway objects:
 
 1. Open `data_process.py` to process raw detection result files and corresponding KITTI label files:   
-   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to detection result files (e.g 000000.txt ...) and the PATH (e.g `.\result\label\val`) to corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`.    
+   Give the PATH (e.g `.\result\ours_pedestrian\mask\val`) to detection result files (e.g 000000.txt ...) and the PATH (e.g `.\result\label\val`) to     corresponding KITTI label files (e.g 000000.txt ...) in `line 455-456` and `line 464-465`.    
    Give `fuction='eval_sub'` in `line 404` and then run the code to extract the sequential detection result files (and sequential label files) for faraway objects.    
 
 2. Open `mAP_toolkit/cpp/evaluate_object.cpp` and revise following lines:  
@@ -91,14 +91,15 @@ There are 3 types of evaluation results, which can be obtained as explained belo
    Change `line 783-784` to your own root PATH.    
 
 3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`:     
-   Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp` or use `CMake` and the provided `'CMakeLists.txt'`.    
+   Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp`   
+   or use `CMake` and the provided `'CMakeLists.txt'`.    
 
-4. Give data for evaluation:    
+4. Give files for evaluation:    
    Copy your sequential label files to `.../cpp/label_2/`.    
    Copy your sequential detection result files to `.../cpp/results/dt/data/`.    
 
-5. Run the compiled file:    
-   Open the Terminal Window in `/cpp` and run as following: `./test dt`.    
+5. Run the compiled C++ file:    
+   Open the Terminal Window in `/cpp` and run as follow: `./test dt`.    
 
 6. Calculate the mAP for faraway objects:    
    Run `.../cpp/calculate_mAP_faraway.py` to print final mAP for 3D/BEV faraway object detection.    
@@ -120,11 +121,11 @@ There are 3 types of evaluation results, which can be obtained as explained belo
 3. Compile the `mAP_toolkit/cpp/evaluate_object.cpp`:   
    Use `g++ -O3 -DNDEBUG -o test evaluate_object.cpp` or use `CMake` and the provided `'CMakeLists.txt'`.  
 
-4. Give data for evaluation:  
+4. Give files for evaluation:  
    Copy your sequential label files to `.../cpp/label_2/`.  
    Copy your sequential detection result files to `.../cpp/results/dt/data/`.  
 
-5. Run the compiled file:  
+5. Run the compiled C++ file:  
    Open the Terminal Window in `/cpp` and run as following: `./test dt`.  
 
 6. Calculate the mAP for faraway objects:  
