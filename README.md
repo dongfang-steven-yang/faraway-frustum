@@ -64,7 +64,8 @@ We also provide the TXT files of both ground truth labels and detection results 
 
 1. Files in `result\label\val` are from the ground truth labels on the validation subset of KITTI dataset.    
 
-2. Files in `result\ours_pedestrian` are pedestrian detection results on the validation subset of our method (`box\val` and `mask\val` represent our model using box-frustum and mask-frustum respectively, which is same for car results below).  
+2. Files in `result\ours_pedestrian` are pedestrian detection results on the validation subset of our method.  
+(`box\val` and `mask\val` represent our model using box-frustum and mask-frustum respectively, which is same for car results below)    
 
 3. Files in `result\ours_car`are car detection results on the validation subset of our method.  
 
