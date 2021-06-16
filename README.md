@@ -7,7 +7,7 @@ This work improves the detection of faraway objects using a frustum-based lidar/
 <img src="pipeline.png" alt="Faraway-Frustum" align="middle" width="800"/>
 </p>
 
-Paper in ArXiv: https://arxiv.org/abs/2011.01404
+Paper in ArXiv: https://arxiv.org/abs/2011.01404 (accepted by ITSC2021)
 
 Official KITTI results: http://www.cvlibs.net/datasets/kitti/eval_object_detail.php?&result=48cc1c0c27874e2cc19cbcc76654e9a01c5403a0
 
